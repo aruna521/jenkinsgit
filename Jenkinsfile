@@ -1,20 +1,24 @@
-node('master') 
+node('master')
 {
-  stage('ContinuousDownload_Mast') 
-  {
-    git 'https://github.com/intelliqittrainings/maven.git'
-  } 
-  stage('ContinuousBuild_Mast')
-  {
-      sh label: '', script: 'mvn package'
-  }
-  stage('ContinuousDeployment_Mast')
-  {
-     sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline@2/webapp/target/webapp.war ubuntu@172.31.36.247:/var/lib/tomcat8/webapps/testwebapp.war'      
-  }
-  
-  
-  
-  
-  
+  stage('cont download')
+{
+    git 'https://github.com/aruna521/jenkinsgit.git'
+}
+stage('cont build')
+{
+    sh label: '', script: 'mvn package'
+}
+stage('cont deployment')
+{
+sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/scripted/webapp/target/webapp.war ubuntu@172.31.29.56:/var/lib/tomcat8/webapps/testwebapp.war'
+}
+stage('cont testing')
+{
+    git 'https://github.com/aruna521/jenkinsgit.git'
+    sh label: '', script: 'echo "testing passed "'
+}
+stage('cont delivery')
+{
+sh label: '', script: 'scp  /home/ubuntu/.jenkins/workspace/scripted/webapp/target/webapp.war ubuntu@172.31.30.136:/var/lib/tomcat8/webapps/prodwebapp.war'
+}
 }
